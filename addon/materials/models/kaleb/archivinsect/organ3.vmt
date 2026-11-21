@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+    "$basetexture" "models/kaleb/archivinsect/insectorgan3_tex"
+
+    "$twosided" "1"
+    "$nocull" "1"
+
+}

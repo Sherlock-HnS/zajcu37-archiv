@@ -1,0 +1,11 @@
+"VertexlitGeneric"
+{
+    "$basetexture" "models/kaleb/archivryan/ryan_tex"
+    "$bumpmap" "models/kaleb/archivryan/ryan_n"
+    "$bumpdetailscale1" 0.3
+    "$twosided" "1"
+    "$nocull" "1"
+	
+
+
+}

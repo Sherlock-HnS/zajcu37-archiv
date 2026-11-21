@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+    "$basetexture" "models/kaleb/archivryan/ryanskele_tex"
+    "$bumpmap" "models/kaleb/archivryan/ryanskele_n"
+
+}

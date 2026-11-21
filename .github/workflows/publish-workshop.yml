@@ -1,0 +1,126 @@
+name: Publish to Steam Workshop
+
+on:
+  push:
+    branches: [main]
+    paths: ['addon/**', 'workshop-preview.jpg', 'workshop.json', '.github/workflows/publish-workshop.yml']
+  pull_request:
+    paths: ['addon/**', 'workshop.json', '.github/workflows/publish-workshop.yml']
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Somente empacotar e validar (sem upload)'
+        type: boolean
+        default: true
+      create_new:
+        description: 'Primeira publicacao: criar um NOVO item (usar uma unica vez)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: workshop-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Read metadata and check content
+        id: meta
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          meta = json.loads(Path('workshop.json').read_text())
+          addon = Path('addon')
+          assert (addon / 'addon.json').is_file(), 'Conteudo ausente: conclua o download e a extracao antes de publicar.'
+          assert any(addon.rglob('*.lua')), 'Addon sem codigo Lua.'
+          for p in addon.rglob('*'):
+              if p.is_file():
+                  with p.open('rb') as f:
+                      assert not f.read(128).startswith(b'version https://git-lfs.github.com/spec/v1'), f'Ponteiro LFS sem assets: {p}'
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              for key in ('title', 'description'):
+                  assert '\n' not in meta[key] and '\r' not in meta[key]
+                  print(f'{key}={meta[key]}', file=f)
+          PY
+      - name: Build and validate GMA without Steam credentials
+        uses: linventif/gmod-workshop-cicd@923dae0a327040b2f01cf6876cbecbbb97462bdf
+        with:
+          steam_user: ''
+          steam_pass: ''
+          content_path: addon
+          published_file_id: '1'
+          title: ${{ steps.meta.outputs.title }}
+          description: ${{ steps.meta.outputs.description }}
+          dry_run: 'true'
+
+  publish:
+    needs: validate
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      ((github.event_name == 'workflow_dispatch' && !inputs.dry_run) ||
+      (github.event_name == 'push' && vars.WORKSHOP_ID != ''))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Validate destination and credentials
+        id: meta
+        env:
+          WORKSHOP_ID: ${{ vars.WORKSHOP_ID }}
+          CREATE_NEW: ${{ inputs.create_new }}
+          STEAM_USER: ${{ secrets.STEAM_USER }}
+          STEAM_PASS: ${{ secrets.STEAM_PASS }}
+          STEAM_SHARED_SECRET: ${{ secrets.STEAM_SHARED_SECRET }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          m = json.loads(Path('workshop.json').read_text())
+          target = os.environ.get('WORKSHOP_ID', '')
+          create = os.environ.get('CREATE_NEW') == 'true'
+          if create:
+              assert target in ('', '0'), 'WORKSHOP_ID ja definido: nao criar item duplicado.'
+              assert Path('workshop-preview.jpg').is_file(), 'Previa ausente.'
+              assert Path('workshop-preview.jpg').stat().st_size < 1024 * 1024, 'Previa precisa ter menos de 1 MiB.'
+              target = '0'
+          else:
+              assert target.isdecimal() and int(target) > 0, 'Configure WORKSHOP_ID ou execute create_new.'
+              assert target != m['source_workshop_id'], 'Use o ID do seu novo item, nao o ID do autor original.'
+          for key in ('STEAM_USER', 'STEAM_PASS', 'STEAM_SHARED_SECRET'):
+              assert os.environ.get(key), f'Secret ausente: {key}'
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              for key in ('title', 'description'):
+                  assert '\n' not in m[key] and '\r' not in m[key]
+                  print(f'{key}={m[key]}', file=f)
+              print(f'item_id={target}', file=f)
+              print(f'preview={"workshop-preview.jpg" if create else ""}', file=f)
+          PY
+      - name: Publish complete addon
+        id: publish
+        uses: linventif/gmod-workshop-cicd@923dae0a327040b2f01cf6876cbecbbb97462bdf
+        with:
+          steam_user: ${{ secrets.STEAM_USER }}
+          steam_pass: ${{ secrets.STEAM_PASS }}
+          steam_shared_secret: ${{ secrets.STEAM_SHARED_SECRET }}
+          content_path: addon
+          preview_file: ${{ steps.meta.outputs.preview }}
+          published_file_id: ${{ steps.meta.outputs.item_id }}
+          title: ${{ steps.meta.outputs.title }}
+          description: ${{ steps.meta.outputs.description }}
+          visibility: '0'
+          change_note: 'Sherlock HnS - commit ${{ github.sha }}'
+      - name: Report confirmed Workshop ID
+        env:
+          ITEM_ID: ${{ steps.publish.outputs.published_file_id }}
+        run: |
+          echo "### Workshop ID: $ITEM_ID" >> "$GITHUB_STEP_SUMMARY"
+          echo 'Salve este ID na variavel de repositorio WORKSHOP_ID para as proximas atualizacoes.' >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,7 @@
+*.gma
+*.zip
+.env
+.env.*
+!.env.example
+steamcmd/
+node_modules/

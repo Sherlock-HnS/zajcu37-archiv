@@ -1,0 +1,22 @@
+{
+  "id": "3637838829",
+  "name": "zajcu37-archiv",
+  "title": "[UPDATE SOON] Zajcu37 Archiv Pill Pack",
+  "author": "kaleb",
+  "status": "extracted_verified",
+  "acquisition": "existing_steam_client_installation",
+  "steamcmd_download_completed": false,
+  "source_workshop_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3637838829",
+  "source_archive_sha256": "3211f9dec1a5216bf9ea7770f4c57d886920cc9f779fdb3411a04d54a7bd7f30",
+  "gma_header": {
+    "title": "Zajcu37 Archiv Pill Pack",
+    "description": "{\"title\":\"Zajcu37 Archiv Pill Pack\",\"type\":\"ServerContent\",\"tags\":[\"fun\",\"roleplay\",\"realism\"],\"ignore\":[]}",
+    "author": "Author Name",
+    "steam_id": "0",
+    "timestamp": 1768891062
+  },
+  "files": 262,
+  "payload_bytes": 164363754,
+  "roundtrip_verified": true,
+  "packaging_exclusions": []
+}
