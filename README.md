@@ -4,7 +4,7 @@ Origem: [Workshop 3637838829](https://steamcommunity.com/sharedfiles/filedetails
 
 Preparado para o projeto Sherlock HnS. Creditos e avisos dos arquivos originais foram preservados; nenhuma licenca nova foi aplicada ao conteudo de terceiros.
 
-Origem desta cópia: cache do cliente Steam. Extração com fastgmad. Conteúdo reconstruído com o gmad oficial e conferido por caminho e SHA-256. O manifest original está em `source/addon.original.json`. O manifest de publicação usa até duas tags e inclui todos os arquivos aceitos pelo gmad.
+Origem desta cópia: SteamCMD. Extração com fastgmad. Conteúdo reconstruído com o gmad oficial e conferido por caminho e SHA-256. O manifest original está em `source/addon.original.json`. O manifest de publicação usa até duas tags e inclui todos os arquivos aceitos pelo gmad.
 
 ## Conteudo
 
