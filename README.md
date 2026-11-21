@@ -4,11 +4,11 @@ Origem: [Workshop 3637838829](https://steamcommunity.com/sharedfiles/filedetails
 
 Preparado para o projeto Sherlock HnS. Creditos e avisos dos arquivos originais foram preservados; nenhuma licenca nova foi aplicada ao conteudo de terceiros.
 
-Estado da importacao: **extracted_verified**. Extraido com fastgmad 0.2.1 a partir do GMA instalado pelo cliente Steam. Todos os arquivos foram conferidos por SHA-256 contra o arquivo original e contra um GMA reconstruido. O download solicitado via SteamCMD ainda nao foi concluido.
+Origem desta cópia: cache do cliente Steam. Extração com fastgmad. Conteúdo reconstruído com o gmad oficial e conferido por caminho e SHA-256. O manifest original está em `source/addon.original.json`. O manifest de publicação usa até duas tags e inclui todos os arquivos aceitos pelo gmad.
 
 ## Conteudo
 
-A pasta `addon/` e a raiz real do addon: Lua, models, materials, sound, particles, resource e quaisquer outros arquivos presentes no GMA original. O workflow empacota essa pasta inteira, usando o addon.json extraido. Metadados de origem, workflow e esta documentacao ficam fora do pacote. `source/files.json` registra o snapshot importado; os hashes documentam a origem, sem bloquear futuras edicoes intencionais.
+A pasta `addon/` e a raiz real do addon: Lua, models, materials, sound, particles, resource e quaisquer outros arquivos presentes no GMA original. O workflow empacota essa pasta inteira, usando o addon.json de publicação. Metadados de origem, workflow e esta documentacao ficam fora do pacote. `source/files.json` registra o snapshot importado; os hashes documentam a origem, sem bloquear futuras edicoes intencionais.
 
 A miniatura `workshop-preview.jpg` veio da colecao original (200 x 200); substitua por uma imagem de maior resolucao antes da primeira publicacao, se desejar. Nas atualizacoes a previa existente na Steam e preservada. Dependencias externas nao sao incorporadas automaticamente: confira e configure Required Items na nova pagina Workshop; mantenha Enhanced Parakeets Pill Base e dependencias especificas da pill instaladas.
 
