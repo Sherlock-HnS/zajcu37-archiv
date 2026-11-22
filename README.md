@@ -1,4 +1,4 @@
-[UPDATE SOON] Zajcu37 Archiv Pill Pack
+# [UPDATE SOON] Zajcu37 Archiv Pill Pack
 
 ![Workshop preview](workshop-preview.jpg)
 
