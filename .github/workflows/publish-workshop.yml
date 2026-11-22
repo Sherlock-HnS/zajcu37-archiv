@@ -48,8 +48,7 @@ jobs:
           def write_output(output, key, value):
               assert isinstance(value, str) and value.strip(), f'Metadata ausente ou invalida: {key}'
               assert '\r' not in value, f'Metadata contem CR inesperado: {key}'
-              if key == 'title':
-                  assert '\n' not in value, 'O titulo deve ocupar apenas uma linha.'
+              assert '\n' not in value, f'{key} deve ocupar uma unica linha; use BBCode da Steam para formatar a descricao.'
               delimiter = f"EOF_{os.urandom(16).hex()}"
               while delimiter in value:
                   delimiter = f"EOF_{os.urandom(16).hex()}"
