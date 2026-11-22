@@ -38,13 +38,10 @@ hook.Add("OnEntityCreated", "zajcu37archivt_initialize_gem_2", function(ent)
                         end
 
                         if self.animFreeze and not self.plyFrozen then
-                            ply:SetWalkSpeed(ply:GetWalkSpeed() / 2)
-                            ply:SetRunSpeed(ply:GetWalkSpeed() / 2)
+                            self:ApplyMoveSpeed()
                             self.plyFrozen = true
                         elseif not self.animFreeze and self.plyFrozen then
-                            local speed = self.formTable.moveSpeed or {}
-                            ply:SetWalkSpeed(speed.walk or 200)
-                            ply:SetRunSpeed(speed.run or speed.walk or 500)
+                            self:ApplyMoveSpeed()
                             self.plyFrozen = nil
                         end
 
@@ -206,7 +203,7 @@ hook.Add("OnEntityCreated", "zajcu37archivt_initialize_gem_2", function(ent)
                         --water death
                         self.touchingWater = ply:WaterLevel() > 1
 
-                        if (self.formTable.damageFromWater and self.touchingWater) then
+                        if not SherlockHNS and self.formTable.damageFromWater and self.touchingWater then
                             if self.formTable.damageFromWater == -1 then
                                 --self:PillDie()
                                 ply:Kill()
@@ -257,7 +254,7 @@ hook.Add("OnEntityCreated", "zajcu37archivt_initialize_gem_2", function(ent)
                         end
 
                         --charge
-                        if self:GetChargeTime() ~= 0 then
+                        if not SherlockHNS and self:GetChargeTime() ~= 0 then
                             if ply:OnGround() then
                                 local charge = self.formTable.charge
                                 local angs = ply:EyeAngles()
@@ -726,6 +723,13 @@ local function zajcu37archivjackietien_jumpscare(ply, ent, duration, customanims
         end
     end
 
+    if SherlockHNS and IsValid(jumpscare_entity) and jumpscare_entity:IsPlayer() then
+        return pk_pills.playHNSJumpscare(ply, ent, jumpscare_entity, duration, {
+            camera = "zajcu37archiv_jumpscare_gen",
+            onStart = customanimstuff,
+        })
+    end
+
     if jumpscare_entity ~= nil then
         
         ent.JuumpscareStart = CurTime()
@@ -939,6 +943,16 @@ attack = {
             end
         end
 
+        if SherlockHNS and IsValid(entity) and entity:IsPlayer() then
+            return pk_pills.playHNSJumpscare(ply, ent, entity, 2.3, {
+                camera = "zajcu37archiv_jumpscare_gen",
+                offset = 37,
+                animation = "jumpscare",
+                sound = "jumpscare",
+                ownerCamera = "zajcu37archiv_jumpscare_gen",
+            })
+        end
+
         if not IsValid(entity) then return end
 
         local pill = ent:GetPuppet()
@@ -1035,7 +1049,14 @@ noragdoll=true,
     end,
 
     
-})
+}, function(form)
+    -- The legacy damage branches are for Sandbox and NPCs.
+    form.hnsKillAPI = true
+    form.hnsAbilities = {
+        { id = "attack", name = "Ataque", key = IN_ATTACK, OnUse = form.attack.func },
+    }
+    form.attack, form.attack2, form.reload = nil, nil, nil
+end)
 
 if CLIENT then
     ARCHIV_AMBIENCE_SOUNDS = {
@@ -1252,6 +1273,16 @@ attack = {
             end
         end
 
+        if SherlockHNS and IsValid(entity) and entity:IsPlayer() then
+            return pk_pills.playHNSJumpscare(ply, ent, entity, 2, {
+                camera = "zajcu37archiv_jumpscare_gen",
+                offset = 42,
+                animation = "jumpscare",
+                sound = "jumpscare",
+                ownerCamera = "zajcu37archiv_jumpscare_gen",
+            })
+        end
+
         if not IsValid(entity) then return end
 
         local pill = ent:GetPuppet()
@@ -1349,7 +1380,14 @@ noragdoll=true,
     end,
 
     
-})
+}, function(form)
+    -- The legacy damage branches are for Sandbox and NPCs.
+    form.hnsKillAPI = true
+    form.hnsAbilities = {
+        { id = "attack", name = "Ataque", key = IN_ATTACK, OnUse = form.attack.func },
+    }
+    form.attack, form.attack2, form.reload = nil, nil, nil
+end)
 
 pk_pills.register("pill_archivinsect",{
 
@@ -1470,6 +1508,16 @@ attack = {
             end
         end
 
+        if SherlockHNS and IsValid(entity) and entity:IsPlayer() then
+            return pk_pills.playHNSJumpscare(ply, ent, entity, 5.9, {
+                camera = "zajcu37archiv_jumpscare_gen",
+                offset = 30,
+                animation = "jumpscare",
+                sound = "jumpscare",
+                ownerCamera = "zajcu37archiv_jumpscare_gen",
+            })
+        end
+
         if not IsValid(entity) then return end
 
         local pill = ent:GetPuppet()
@@ -1566,4 +1614,11 @@ noragdoll=true,
     end,
 
     
-})
+}, function(form)
+    -- The legacy damage branches are for Sandbox and NPCs.
+    form.hnsKillAPI = true
+    form.hnsAbilities = {
+        { id = "attack", name = "Ataque", key = IN_ATTACK, OnUse = form.attack.func },
+    }
+    form.attack, form.attack2, form.reload = nil, nil, nil
+end)
