@@ -1,8 +1,26 @@
 # [UPDATE SOON] Zajcu37 Archiv Pill Pack
 
-Origem: [Workshop 3637838829](https://steamcommunity.com/sharedfiles/filedetails/?id=3637838829), por **kaleb**.
+![Workshop preview](workshop-preview.jpg)
 
-Preparado para o projeto Sherlock HnS. Creditos e avisos dos arquivos originais foram preservados; nenhuma licenca nova foi aplicada ao conteudo de terceiros.
+## Créditos e origem
+
+> **Aviso:** esta pill não foi criada por mim nem pela equipe Sherlock HnS. O conteúdo original pertence aos seus respectivos autores; todos os créditos devem ser atribuídos a eles.
+
+- **Nome original:** [UPDATE SOON] Zajcu37 Archiv Pill Pack
+- **Autor original:** kaleb
+- **Publicação oficial:** [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3637838829)
+
+## Adaptação para o Sherlock HnS
+
+Esta é uma versão adaptada da pill original para funcionar e se integrar melhor à estrutura do servidor **Sherlock HnS**. Foram realizadas modificações de compatibilidade e integração com os sistemas e a API utilizados pelo servidor. Essas alterações não significam autoria sobre o trabalho original, que continua pertencendo ao seu criador.
+
+## Suporte e comunidade
+
+Se encontrar algum problema com esta versão, entre em contato com **tomate007_** ou **sherlockvitinho** dentro do Sherlock.
+
+- **Discord da comunidade:** [Entre no servidor Sherlock HnS](https://discord.gg/EHXbAmpbse)
+
+---
 
 Origem desta cópia: SteamCMD. Extração com fastgmad. Conteúdo reconstruído com o gmad oficial e conferido por caminho e SHA-256. O manifest original está em `source/addon.original.json`. O manifest de publicação usa até duas tags e inclui todos os arquivos aceitos pelo gmad.
 
