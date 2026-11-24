@@ -711,6 +711,9 @@ local function zajcu37archivjackietien_jumpscare(ply, ent, duration, customanims
 
     local jumpscare_entity = nil
 
+    if SherlockHNS then
+        jumpscare_entity = SherlockHNS.FindVictim(ply, ent:LocalToWorld(Vector(0, 0, 50)), 90)
+    else
     for _, ent2 in pairs(ents.FindInSphere(ent:LocalToWorld(Vector(0, 0, 50)), 90)) do
         if (ent2:IsPlayer() or ent2:IsNextBot() or ent2:IsNPC()) and ent2:Health() >= 0.1 then
             if ent2 == ply then continue end
@@ -721,6 +724,7 @@ local function zajcu37archivjackietien_jumpscare(ply, ent, duration, customanims
                 break
             end
         end
+    end
     end
 
     if SherlockHNS and IsValid(jumpscare_entity) and jumpscare_entity:IsPlayer() then
@@ -923,7 +927,22 @@ attack = {
     func = function(ply, ent)
         local entity -- make it local to avoid persisting between attacks
 
-        for k, v in pairs(ents.FindInSphere(ent:LocalToWorld(Vector(0, 0, 50)), 130)) do
+        local targetOrigin = ent:LocalToWorld(Vector(0, 0, 50))
+if SherlockHNS then
+    entity = SherlockHNS.FindVictim(ply, targetOrigin, 130, {
+        filter = function(v)
+
+            local trace = util.TraceLine({
+                start = ent:EyePos(),
+                endpos = v:EyePos(),
+                filter = {ent, ply},
+                mask = MASK_VISIBLE
+            })
+            return not trace.Hit
+        end,
+    })
+else
+for k, v in pairs(ents.FindInSphere(ent:LocalToWorld(Vector(0, 0, 50)), 130)) do
             if v:IsPlayer() or v:IsNextBot() or v:IsNPC() then
                 if v == ent or v == ply then continue end
 
@@ -942,8 +961,9 @@ attack = {
                 end
             end
         end
+end
 
-        if SherlockHNS and IsValid(entity) and entity:IsPlayer() then
+if SherlockHNS and IsValid(entity) and entity:IsPlayer() then
             return pk_pills.playHNSJumpscare(ply, ent, entity, 2.3, {
                 camera = "zajcu37archiv_jumpscare_gen",
                 offset = 37,
@@ -1253,7 +1273,22 @@ attack = {
     func = function(ply, ent)
         local entity -- make it local to avoid persisting between attacks
 
-        for k, v in pairs(ents.FindInSphere(ent:LocalToWorld(Vector(0, 0, 50)), 130)) do
+        local targetOrigin = ent:LocalToWorld(Vector(0, 0, 50))
+if SherlockHNS then
+    entity = SherlockHNS.FindVictim(ply, targetOrigin, 130, {
+        filter = function(v)
+
+            local trace = util.TraceLine({
+                start = ent:EyePos(),
+                endpos = v:EyePos(),
+                filter = {ent, ply},
+                mask = MASK_VISIBLE
+            })
+            return not trace.Hit
+        end,
+    })
+else
+for k, v in pairs(ents.FindInSphere(ent:LocalToWorld(Vector(0, 0, 50)), 130)) do
             if v:IsPlayer() or v:IsNextBot() or v:IsNPC() then
                 if v == ent or v == ply then continue end
 
@@ -1272,8 +1307,9 @@ attack = {
                 end
             end
         end
+end
 
-        if SherlockHNS and IsValid(entity) and entity:IsPlayer() then
+if SherlockHNS and IsValid(entity) and entity:IsPlayer() then
             return pk_pills.playHNSJumpscare(ply, ent, entity, 2, {
                 camera = "zajcu37archiv_jumpscare_gen",
                 offset = 42,
@@ -1488,7 +1524,22 @@ attack = {
     func = function(ply, ent)
         local entity -- make it local to avoid persisting between attacks
 
-        for k, v in pairs(ents.FindInSphere(ent:LocalToWorld(Vector(0, 0, 50)), 130)) do
+        local targetOrigin = ent:LocalToWorld(Vector(0, 0, 50))
+if SherlockHNS then
+    entity = SherlockHNS.FindVictim(ply, targetOrigin, 130, {
+        filter = function(v)
+
+            local trace = util.TraceLine({
+                start = ent:EyePos(),
+                endpos = v:EyePos(),
+                filter = {ent, ply},
+                mask = MASK_VISIBLE
+            })
+            return not trace.Hit
+        end,
+    })
+else
+for k, v in pairs(ents.FindInSphere(ent:LocalToWorld(Vector(0, 0, 50)), 130)) do
             if v:IsPlayer() or v:IsNextBot() or v:IsNPC() then
                 if v == ent or v == ply then continue end
 
@@ -1507,8 +1558,9 @@ attack = {
                 end
             end
         end
+end
 
-        if SherlockHNS and IsValid(entity) and entity:IsPlayer() then
+if SherlockHNS and IsValid(entity) and entity:IsPlayer() then
             return pk_pills.playHNSJumpscare(ply, ent, entity, 5.9, {
                 camera = "zajcu37archiv_jumpscare_gen",
                 offset = 30,
