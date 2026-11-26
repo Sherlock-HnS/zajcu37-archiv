@@ -13,6 +13,7 @@ if !pcall(require,"pk_pills") then
 end
 
 AddCSLuaFile()
+AddCSLuaFile("include/zajcu37archiv.lua")
 include("include/zajcu37archiv.lua")
 
 
